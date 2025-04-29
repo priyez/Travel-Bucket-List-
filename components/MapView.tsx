@@ -48,14 +48,6 @@ export default function MapView() {
   }, [searchParams, setDestinations]);
 
 
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    // This will run only on the client side
-    setIsClient(true);
-  }, []);
-
-
 
   const encodeTripData = (destinations: Destination[]) => {
     return btoa(JSON.stringify(destinations));
