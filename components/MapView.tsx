@@ -56,12 +56,13 @@ export default function MapView() {
   
 
   const handleGenerateLink = () => {
+    if (typeof window !== "undefined") {
       const code = encodeTripData(destinations);
-      const url = `http://localhost:3000/dashboard?code=${code}`;
+      const url = `${window.location.origin}?code=${code}`;
       navigator.clipboard.writeText(url)
         .then(() => toast.success("Shareable link copied to clipboard!"))
         .catch((err) => console.error('Failed to copy', err));
-    
+    }
   };
   
 
@@ -72,7 +73,6 @@ export default function MapView() {
       });
     }
   }, []);
-  
 
   const handleMapClick = async (lat: number, lng: number) => {
     setSelectedCoordinates([lat, lng]); // set clicked coordinates
