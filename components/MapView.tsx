@@ -53,15 +53,15 @@ export default function MapView() {
     return btoa(JSON.stringify(destinations));
   };
 
+  
 
   const handleGenerateLink = () => {
-    if (typeof window !== "undefined") {
       const code = encodeTripData(destinations);
-      const url = `${window.location.origin}?code=${code}`;
+      const url = `http://localhost:3000/dashboard?code=${code}`;
       navigator.clipboard.writeText(url)
         .then(() => toast.success("Shareable link copied to clipboard!"))
         .catch((err) => console.error('Failed to copy', err));
-    }
+    
   };
   
 
