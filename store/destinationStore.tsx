@@ -1,3 +1,5 @@
+'use client'; // This makes sure this file is client-only
+
 import { create } from 'zustand';
 
 interface Destination {
@@ -13,53 +15,61 @@ interface DestinationStore {
   destinations: Destination[];
   clickedCoordinates: [number, number] | null;
   addDestination: (destination: Destination) => void;
-  updateCategory: (id: string, newCategory: Destination['category']) => void; // Ensure 'id' is typed as string
-  removeDestination: (id: string) => void; // Ensure 'id' is typed as string
+  updateCategory: (id: string, newCategory: Destination['category']) => void;
+  removeDestination: (id: string) => void;
   setClickedCoordinates: (coordinates: [number, number]) => void;
   setDestinations: (destinations: Destination[]) => void;
 }
 
 const useDestinationStore = create<DestinationStore>((set) => {
-  // Load destinations from localStorage
-  const savedDestinations = localStorage.getItem('destinations');
-  const destinations = savedDestinations ? JSON.parse(savedDestinations) : [];
-
   return {
-    destinations,
-    clickedCoordinates: null, 
+    destinations: [],
+    clickedCoordinates: null,
     addDestination: (destination) => {
       set((state) => {
-        const updatedDestinations = [...state.destinations, destination];
-        // Save to localStorage
-        localStorage.setItem('destinations', JSON.stringify(updatedDestinations));
-        return { destinations: updatedDestinations };
+        const updated = [...state.destinations, destination];
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('destinations', JSON.stringify(updated));
+        }
+        return { destinations: updated };
       });
     },
-    updateCategory: (id: string, newCategory: Destination['category']) => {
+    updateCategory: (id, newCategory) => {
       set((state) => {
-        const updatedDestinations = state.destinations.map((dest) =>
+        const updated = state.destinations.map((dest) =>
           dest.id === id ? { ...dest, category: newCategory } : dest
         );
-        // Save to localStorage
-        localStorage.setItem('destinations', JSON.stringify(updatedDestinations));
-        return { destinations: updatedDestinations };
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('destinations', JSON.stringify(updated));
+        }
+        return { destinations: updated };
       });
     },
-    removeDestination: (id: string) => { // Ensure 'id' is typed as string
+    removeDestination: (id) => {
       set((state) => {
-        const updatedDestinations = state.destinations.filter((dest) => dest.id !== id);
-        // Save to localStorage
-        localStorage.setItem('destinations', JSON.stringify(updatedDestinations));
-        return { destinations: updatedDestinations };
+        const updated = state.destinations.filter((dest) => dest.id !== id);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('destinations', JSON.stringify(updated));
+        }
+        return { destinations: updated };
       });
     },
     setClickedCoordinates: (coordinates) => set({ clickedCoordinates: coordinates }),
     setDestinations: (destinations) => {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('destinations', JSON.stringify(destinations));
+      }
       set({ destinations });
-      // Save to localStorage
-      localStorage.setItem('destinations', JSON.stringify(destinations));
     },
   };
 });
+
+// Hydrate from localStorage only on the client
+if (typeof window !== 'undefined') {
+  const saved = localStorage.getItem('destinations');
+  if (saved) {
+    useDestinationStore.getState().setDestinations(JSON.parse(saved));
+  }
+}
 
 export default useDestinationStore;
