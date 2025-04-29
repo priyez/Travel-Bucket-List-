@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 export default function MapRevealCursor() {
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -18,7 +19,7 @@ export default function MapRevealCursor() {
     <div className="absolute z-[5] w-full h-screen hidden md:flex overflow-hidden">
       {/* Map Layer */}
       <div className="absolute inset-0 z-0">
-      <img
+      <Image
           src="/map.jpg"
           alt="Map Preview"
           className="w-full h-full object-cover"

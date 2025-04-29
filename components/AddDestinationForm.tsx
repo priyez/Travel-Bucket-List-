@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
+import Image from 'next/image';
 
 interface AddDestinationFormProps {
   initialCoordinates: [number, number] | null;
@@ -67,9 +68,15 @@ export default function AddDestinationForm({ initialCoordinates = null, initialN
           <div className='mt-2 mb-1'>
             <div className='flex w-full'>
               <div className='w-[30%] '>
-              {imageUrl &&(
-                <img src={imageUrl} alt={name} className="w-24 h-24 object-cover rounded-lg mb-2" />
-              )}
+                {imageUrl && (
+                  <Image
+                    src={imageUrl}
+                    alt={name}
+                    width={96}
+                    height={96}
+                    className="object-cover rounded-lg mb-2"
+                  />
+                )}
               </div>
               <div className='px-2 w-[70%]'>
                 <h4 className='text-sm pt-2'>{name}</h4>
@@ -77,7 +84,7 @@ export default function AddDestinationForm({ initialCoordinates = null, initialN
             </div>
             <div>
               <Label htmlFor="category" className='text-xs my-1'>Category</Label>
-              <Select value={category} onValueChange={(val: any) => setCategory(val)}>
+              <Select value={category} onValueChange={(val: 'dream' | 'planned' | 'completed') => setCategory(val)}>
                 <SelectTrigger id="category" className='w-full'>
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>

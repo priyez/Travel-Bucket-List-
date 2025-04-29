@@ -16,8 +16,11 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import type { DragEndEvent } from '@dnd-kit/core';
+import { Destination } from '@/types/types';
 
-function SortableItem({ destination }: { destination: any }) {
+function SortableItem({ destination }: { destination: Destination }) {
+
   const {
     attributes,
     listeners,
@@ -63,8 +66,11 @@ export default function DestinationList() {
 
   const sensors = useSensors(useSensor(PointerSensor));
 
-  const handleDragEnd = (event: any) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
+  
+    if (!over) return; 
+  
     if (active.id !== over.id) {
       const oldIndex = destinations.findIndex((d) => d.id === active.id);
       const newIndex = destinations.findIndex((d) => d.id === over.id);
@@ -72,7 +78,7 @@ export default function DestinationList() {
       setDestinations(reordered);
     }
   };
-
+  
   useEffect(() => {
     console.log(destinations);
   }, [destinations]);

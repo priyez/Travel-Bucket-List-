@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function TapToRevealMap() {
   const [spot, setSpot] = useState<{ x: number; y: number } | null>(null);
@@ -20,7 +21,7 @@ export default function TapToRevealMap() {
     >
       {/* Map Layer */}
       <div className="absolute inset-0 z-0">
-      <img
+      <Image
           src="/map.jpg"
           alt="Map Preview"
           className="w-full h-full object-cover"

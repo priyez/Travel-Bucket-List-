@@ -11,12 +11,7 @@ import AddDestinationForm from '@/components/AddDestinationForm';
 import { decodeTripData } from '@/lib/encodeTrip';
 import { Toaster, toast } from "sonner";
 import { useSearchParams } from 'next/navigation'; // next.js app router
-
-
-
-interface MapViewProps {
-  onMapClick: (lat: number, lng: number) => void;
-}
+import { Destination } from '@/types/types';
 
 function MapEvents({ onMapClick }: { onMapClick: (lat: number, lng: number) => void }) {
   useMapEvents({
@@ -30,7 +25,7 @@ function MapEvents({ onMapClick }: { onMapClick: (lat: number, lng: number) => v
   return null; // This component doesn't render anything itself
 }
 
-export default function MapView({ onMapClick }: MapViewProps) {
+export default function MapView() {
   const { destinations, setDestinations } = useDestinationStore();
   const center: LatLngExpression = [20, 0];
   const defaultZoom = 2;
@@ -45,12 +40,12 @@ export default function MapView({ onMapClick }: MapViewProps) {
     if (code) {
       try {
         const sharedDestinations = decodeTripData(code);
-        setDestinations(sharedDestinations); // replace the store with decoded destinations
+        setDestinations(sharedDestinations);
       } catch (error) {
         console.error('Failed to decode trip data', error);
       }
     }
-  }, []);
+  }, [searchParams, setDestinations]);
 
 
   const [isClient, setIsClient] = useState(false);
@@ -60,17 +55,19 @@ export default function MapView({ onMapClick }: MapViewProps) {
     setIsClient(true);
   }, []);
 
-  const encodeTripData = (destinations: any) => {
- 
+
+
+  const encodeTripData = (destinations: Destination[]) => {
     return btoa(JSON.stringify(destinations));
   };
+
 
   const handleGenerateLink = () => {
     if (isClient) {
       const code = encodeTripData(destinations);
       const url = `${window.location.origin}?code=${code}`;
       navigator.clipboard.writeText(url)
-        .then(() =>  toast.success("Shareable link copied to clipboard!"))
+        .then(() => toast.success("Shareable link copied to clipboard!"))
         .catch((err) => console.error('Failed to copy', err));
     }
   };
@@ -152,7 +149,7 @@ export default function MapView({ onMapClick }: MapViewProps) {
         onClick={handleGenerateLink}
         className="fixed top-4 right-4 bg-white h-14 w-14 text-black px-4 py-2 rounded-full"
       >
-        <Link/>
+        <Link />
       </button>
 
       {/* Pass selectedCoordinates to the form */}

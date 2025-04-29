@@ -1,6 +1,7 @@
 import LZString from 'lz-string';
+import { Destination } from '@/types/types';
 
-export function encodeTripData(destinations: any[]) {
+export function encodeTripData(destinations: Destination[]) {
   const json = JSON.stringify(destinations);
   return LZString.compressToEncodedURIComponent(json); // much smaller code
 }

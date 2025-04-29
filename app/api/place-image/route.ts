@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server'; 
 
-const PEXELS_API_KEY = "0VPD5zGmGc2gMAqwhgLyRx03d6Si8pouyrYvd7S04RWUsJRw59PjgSyk";
-
+const PEXELS_API_KEY = process.env.PEXELS_API_KEY!;
 
 export async function GET(req: NextRequest) {  
     const query = req.nextUrl.searchParams.get('q');

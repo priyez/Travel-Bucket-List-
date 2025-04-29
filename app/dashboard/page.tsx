@@ -4,18 +4,21 @@ import DestinationList from '@/components/DestinationList';
 import { useState } from 'react';
 
 export default function Dashboard() {
-  const [coordinates, setCoordinates] = useState<[number, number] | null>(null);
+    const [coordinates, setCoordinates] = useState<[number, number] | null>(null);
 
-  const handleMapClick = (lat: number, lng: number) => {
-    setCoordinates([lat, lng]); // Update the coordinates when map is clicked
-  };
 
-  return (
-    <main className="h-screen">
-      <MapView onMapClick={handleMapClick} />
-      <div className="p-3  fixed z-10 top-1">
-      <DestinationList />
-      </div>
-    </main>
-  );
+    return (
+        <main className="h-screen">
+            <MapView  />
+            <div className="p-3  fixed z-10 top-1">
+                <DestinationList />
+            </div>
+            {coordinates && (
+                <div className="absolute bottom-4 left-4 bg-white/80 text-black px-3 py-1 rounded">
+                    Lat: {coordinates[0].toFixed(4)}, Lng: {coordinates[1].toFixed(4)}
+                </div>
+            )}
+
+        </main>
+    );
 }
