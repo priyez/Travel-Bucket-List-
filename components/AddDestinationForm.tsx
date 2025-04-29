@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import Image from 'next/image';
+// import Image from 'next/image';
 
 interface AddDestinationFormProps {
   initialCoordinates: [number, number] | null;
