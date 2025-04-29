@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'; // disables prerendering
 'use client';
 import MapView from '@/components/MapView';
 import DestinationList from '@/components/DestinationList';

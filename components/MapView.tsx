@@ -66,12 +66,13 @@ export default function MapView() {
   
 
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (typeof window !== 'undefined' && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         setUserLocation([position.coords.latitude, position.coords.longitude]);
       });
     }
   }, []);
+  
 
   const handleMapClick = async (lat: number, lng: number) => {
     setSelectedCoordinates([lat, lng]); // set clicked coordinates
