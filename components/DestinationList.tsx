@@ -56,7 +56,7 @@ function SortableItem({ destination }: { destination: Destination }) {
       <div>
         <p className="font-light mx-2 text-xs">{destination.name}</p>
       </div>
-      <button onClick={() => removeDestination(destination.id)}>x</button>
+      <button className='z-10' onClick={() => removeDestination(destination.id)}>x</button>
     </li>
   );
 }

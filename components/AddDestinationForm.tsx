@@ -98,7 +98,7 @@ export default function AddDestinationForm({ initialCoordinates = null, initialN
           </div>
 
           <div className="pt-1 my-0">
-            <Button type="submit" className="w-full my-1 bg-white text-black">
+            <Button type="submit" className="w-full my-1 bg-white hover:bg-accent text-black">
               Add Destination
             </Button>
           </div>

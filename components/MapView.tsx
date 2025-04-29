@@ -63,7 +63,7 @@ export default function MapView() {
 
 
   const handleGenerateLink = () => {
-    if (isClient) {
+    if (typeof window !== "undefined") {
       const code = encodeTripData(destinations);
       const url = `${window.location.origin}?code=${code}`;
       navigator.clipboard.writeText(url)
@@ -71,6 +71,7 @@ export default function MapView() {
         .catch((err) => console.error('Failed to copy', err));
     }
   };
+  
 
   useEffect(() => {
     if (navigator.geolocation) {
