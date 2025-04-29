@@ -67,14 +67,12 @@ export default function AddDestinationForm({ initialCoordinates = null, initialN
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className='mt-2 mb-1'>
             <div className='flex w-full'>
-              <div className='w-[30%] '>
+              <div className='w-[30%] h-20'>
                 {imageUrl && (
-                  <Image
+                  <img
                     src={imageUrl}
                     alt={name}
-                    width={96}
-                    height={96}
-                    className="object-cover rounded-lg mb-2"
+                   className="object-cover h-20 w-30 rounded-lg mb-2"
                   />
                 )}
               </div>

@@ -7,7 +7,7 @@ import dynamicImport from 'next/dynamic';
 const MapView = dynamicImport(() => import('@/components/MapView'), {
   ssr: false,
 });
-const DestinationList = dynamicImport(() => import('@/components/MapView'), {
+const DestinationList = dynamicImport(() => import('@/components/DestinationList'), {
     ssr: false,
   });
 
@@ -15,7 +15,7 @@ export default function Dashboard() {
   return (
     <main className="h-screen">
       <MapView />
-      <div className="p-3 fixed z-10 top-1">
+      <div className="p-3 fixed z-60 top-1">
         <DestinationList />
       </div>
     </main>
